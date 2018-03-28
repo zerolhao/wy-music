@@ -25,14 +25,15 @@ var server = http.createServer(function(request, response){
     response.statusCode = 200
     response.setHeader('Content-Type', 'text/json;charset=utf-8')
     response.setHeader('Access-Control-Allow-Origin', 'http://frank.com:8001')
+    var key = fs.readFileSync('./qiniu-key.json')
+    key = JSON.parse(key)
+
+    let {accessKey, sertKey} = key
+    var mac
+
     response.write(`
     {
-      "note":{
-        "to": "小谷",
-        "from": "方方",
-        "heading": "打招呼",
-        "content": "hi"
-      }
+      "uptoken": ${}
     }
     `)
     response.end()
