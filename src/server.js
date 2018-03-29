@@ -29,7 +29,7 @@ var server = http.createServer(function(request, response) {
 
     var key = fs.readFileSync('./qiniu-key.json')
     key = JSON.parse(key)
-    
+
     let { accessKey, secretKey } = key
     var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 
@@ -38,10 +38,10 @@ var server = http.createServer(function(request, response) {
     };
     var putPolicy = new qiniu.rs.PutPolicy(options);
     var uploadToken = putPolicy.uploadToken(mac);
-
+    console.log(uploadToken)
     response.write(`
     {
-      "uptoken": ${uploadToken}
+      "uptoken": "${uploadToken}"
     }
     `)
     response.end()
