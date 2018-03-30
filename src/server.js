@@ -38,7 +38,6 @@ var server = http.createServer(function(request, response) {
     };
     var putPolicy = new qiniu.rs.PutPolicy(options);
     var uploadToken = putPolicy.uploadToken(mac);
-    console.log(uploadToken)
     response.write(`
     {
       "uptoken": "${uploadToken}"
