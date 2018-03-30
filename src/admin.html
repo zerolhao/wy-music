@@ -4,29 +4,51 @@
 <head>
   <meta charset="UTF-8">
   <title>Administrator</title>
-  <style>
-    #uploadContainer{
-      width: 300px;
-      height: 200px;
-      border: 2px dashed #ddd;
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
+  <link rel="stylesheet" href="css/default.css">
 </head>
 
 <body>
-  <div id="uploadContainer">
-    <span id="uploadBtn">上传或拖曳</span>
-    <span>文件大小不能超过 40MB</span>
+  <div class="page">
+    <aside>
+      <div class="newSong">
+        新建歌曲
+      </div>
+      <div class="songList">
+        <ul>
+          <li class="active">song 1</li>
+          <li>song 2</li>
+          <li>song 3</li>
+        </ul>
+      </div>
+      <div class="uploadArea">
+        <div id="uploadContainer" class="draggable">
+          <div id="uploadBtn" class="clickable">
+            <p>上传或拖曳</p>
+            <p>文件大小不能超过 40MB</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <main>
+      <form class="form">
+        <div class="row">
+          <label>歌名</label>
+          <input type="text" name='name'>
+        </div>
+        <div class="row">
+          <label>歌手</label>
+          <input type="text" name='singer'>
+        </div>
+        <div class="row">
+          <label>外链</label>
+          <input type="text" name='url'>
+        </div>
+        <div class="row">
+          <button type="submit">保存</button>
+        </div>
+      </form>
+    </main>
   </div>
-  <div id='uploadStatus'></div>
-
-  <audio controls src="http://p6az32xea.bkt.clouddn.com/%E8%AE%B8%E5%B5%A9%20-%20%E6%B8%85%E6%98%8E%E9%9B%A8%E4%B8%8A.mp3"></audio>
-
   <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
   <script>
   // leancloud
@@ -50,7 +72,7 @@
     // 切如果提供了多个，其优先级为 uptoken > uptoken_url > uptoken_func
     // 其中 uptoken 是直接提供上传凭证，uptoken_url 是提供了获取上传凭证的地址，如果需要定制获取 uptoken 的过程则可以设置 uptoken_func
     // uptoken : '<Your upload token>', // uptoken 是上传凭证，由其他程序生成
-    uptoken_url: 'http://localhost:8888/uptoken',         // Ajax 请求 uptoken 的 Url，**强烈建议设置**（服务端提供）
+    uptoken_url: 'http://localhost:8888/uptoken', // Ajax 请求 uptoken 的 Url，**强烈建议设置**（服务端提供）
     // uptoken_func: function(file){    // 在需要获取 uptoken 时，该方法会被调用
     //    // do something
     //    return uptoken;
@@ -93,16 +115,14 @@
       },
       'UploadProgress': function(up, file) {
         // 每个文件上传时,处理相关的事情
-        uploadStatus.innerText = '上传中……'
       },
       // 文件上传成功后调用 FileUploaded
       'FileUploaded': function(up, file, info) {
         // 每个文件上传成功后,处理相关的事情
-        uploadStatus.innerText = '上传完毕'
         var domain = up.getOption('domain');
         var response = JSON.parse(info.response);
-        var sourceLink = 'http://' + domain + '/' + encodeURIComponent(response.key); //
-        uploadStatus.innerText = sourceLink
+        var url = 'http://' + domain + '/' + encodeURIComponent(response.key); 
+        console.log(response.key)
       },
       'Error': function(up, err, errTip) {
         //上传出错时,处理相关的事情
@@ -112,11 +132,6 @@
       }
     }
   });
-
-  // domain 为七牛空间（bucket)对应的域名，选择某个空间后，可通过"空间设置->基本设置->域名设置"查看获取
-
-  // uploader 为一个 plupload 对象，继承了所有 plupload 的方法，参考http://plupload.com/docs
-  
   </script>
 </body>
 
