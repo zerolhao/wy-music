@@ -27,21 +27,13 @@
     </main>
   </div>
   <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
-  <script>
-  // leancloud
-  var APP_ID = '2LSPonTJSNs8Xf49mVniCvAv-gzGzoHsz';
-  var APP_KEY = 'eKLKQbapsVyhQRbFXIrTOpH4';
-
-  AV.init({
-    appId: APP_ID,
-    appKey: APP_KEY
-  });
-  </script>
   <script src="../node_modules/jquery/dist/jquery.min.js"></script>
   <script src="../venders/moxie.min.js"></script>
   <script src="../venders/plupload.min.js"></script>
   <script src="../node_modules/qiniu-js/dist/qiniu.min.js"></script>
   // MVC 与 模块化
+  <script src="js/initializers/av.js"></script>
+  <script src="js/event-hub.js"></script>
   <script src="js/new-song.js"></script>
   <script src="js/song-list.js"></script>
   <script src="js/upload-song.js"></script>
