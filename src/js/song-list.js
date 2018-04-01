@@ -5,19 +5,19 @@
       <ul class="songList">
       </ul>
     `,
-    init(){
+    init() {
       this.$el = $(this.el)
       this.$el.html(this.template)
     },
-    render(data){
-      let {songs} = data
-      let liList = songs.map((song)=>{return $('<li></li>').text(song.name)})
+    render(data) {
+      let { songs } = data
+      let liList = songs.map((song) => { return $('<li></li>').text(song.name) })
       this.$el.find('ul').empty()
-      liList.map((li)=>{
+      liList.map((li) => {
         this.$el.find('ul').append(li)
       })
     },
-    clearActive(){
+    clearActive() {
       $(this.el).find('.active').removeClass('active')
     }
   }
@@ -26,18 +26,36 @@
       songs: [
         //{ id:'1', name:'1'},{ id:'2', name:'2'}
       ]
+    },
+    find(){
+      var query = new AV.Query('Song');
+      return query.find().then((songs)=>{
+        this.data.songs = songs.map((song)=>{
+          return {id:song.id, ...song.attributes}
+        })
+        return songs
+      })
     }
   }
   let controller = {
-    init(view, model){
+    init(view, model) {
       this.view = view
       this.view.init()
       this.model = model
       this.view.render(this.model.data)
-      window.eventHub.on('upload',()=>{
+      this.model.find().then(()=>{
+        this.view.render(this.model.data)
+      })
+      this.bindEvents()
+      this.bindEventHub()
+    },
+    bindEvents() {
+    },
+    bindEventHub() {
+      window.eventHub.on('upload', () => {
         this.view.clearActive()
       })
-      window.eventHub.on('create', (songData)=>{
+      window.eventHub.on('create', (songData) => {
         this.model.data.songs.push(songData)
         this.view.render(this.model.data)
       })
