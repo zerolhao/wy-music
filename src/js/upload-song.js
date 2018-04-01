@@ -46,7 +46,7 @@
             var domain = up.getOption('domain');
             var response = JSON.parse(info.response);
             var url = 'http://' + domain + '/' + encodeURIComponent(response.key);
-            window.eventHub.emit('upload',{
+            window.eventHub.emit('new',{
               url: url,
               name: response.key
             })

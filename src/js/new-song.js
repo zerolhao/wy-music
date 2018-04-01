@@ -29,9 +29,9 @@
       })
     },
     bindEventHub(){
-      window.eventHub.on('upload',(data)=>{
+      /*window.eventHub.on('upload',(data)=>{
         this.view.active()
-      })
+      })*/
       window.eventHub.on('select',()=>{
         this.view.deactive()
       })
