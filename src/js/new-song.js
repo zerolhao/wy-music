@@ -4,6 +4,12 @@
     template: `新建歌曲`,
     render(data){
       $(this.el).html(this.template)
+    },
+    deactive(){
+      $(this.el).removeClass('active')
+    },
+    active(){
+      $(this.el).addClass('active')
     }
   }
   let model = {}
@@ -12,13 +18,13 @@
       this.view = view
       this.model = model
       this.view.render(this.model.data)
-      this.active()
+      this.view.active()
       window.eventHub.on('upload',(data)=>{
-        this.active()
+        this.view.active()
       })
-    },
-    active(){
-      $(this.view.el).addClass('active')
+      window.eventHub.on('select',()=>{
+        this.view.deactive()
+      })
     }
   }
   controller.init(view, model)

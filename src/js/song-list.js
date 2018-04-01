@@ -50,6 +50,11 @@
       this.bindEventHub()
     },
     bindEvents() {
+      this.view.$el.on('click','li',(e)=>{
+        let $li = $(e.currentTarget)
+        $li.addClass('active').siblings().removeClass('active')
+        window.eventHub.emit('select')
+      })
     },
     bindEventHub() {
       window.eventHub.on('upload', () => {
