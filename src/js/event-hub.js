@@ -21,3 +21,7 @@ window.eventHub = {
   },
   //off(){},
 }
+// 深拷贝
+function dpcp(data){
+  return JSON.parse(JSON.stringify(data))
+}

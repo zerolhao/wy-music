@@ -11,11 +11,17 @@
     },
     render(data) {
       let { songs } = data
-      let liList = songs.map((song) => { return $('<li></li>').text(song.name) })
+      let liList = songs.map((song) => { 
+        return $('<li></li>').text(song.name).attr('data-song-id',song.id) 
+      })
       this.$el.find('ul').empty()
       liList.map((li) => {
         this.$el.find('ul').append(li)
       })
+    },
+    activeItem(li){
+      let $li = $(li)
+      $li.addClass('active').siblings().removeClass('active')
     },
     clearActive() {
       $(this.el).find('.active').removeClass('active')
@@ -24,7 +30,7 @@
   let model = {
     data: {
       songs: [
-        //{ id:'1', name:'1'},{ id:'2', name:'2'}
+        //{ id:'1', name:'1',url:'',singer:''}
       ]
     },
     find(){
@@ -51,9 +57,16 @@
     },
     bindEvents() {
       this.view.$el.on('click','li',(e)=>{
-        let $li = $(e.currentTarget)
-        $li.addClass('active').siblings().removeClass('active')
-        window.eventHub.emit('select')
+        this.view.activeItem(e.currentTarget)
+        let songId = e.currentTarget.getAttribute('data-song-id')
+        let data = {}
+        this.model.data.songs.map((song)=>{
+          if(song.id === songId){ data = song
+            dpcp(data)
+            console.log(data)
+          }
+        })
+        window.eventHub.emit('select',)
       })
     },
     bindEventHub() {
