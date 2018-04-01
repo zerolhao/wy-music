@@ -19,6 +19,16 @@
       this.model = model
       this.view.render(this.model.data)
       this.view.active()
+      this.bindEvents()
+      this.bindEventHub()
+    },
+    bindEvents(){
+      $(this.view.el).on('click',()=>{
+        this.view.active()
+        window.eventHub.emit('new')
+      })
+    },
+    bindEventHub(){
       window.eventHub.on('upload',(data)=>{
         this.view.active()
       })
