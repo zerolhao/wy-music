@@ -61,12 +61,9 @@
         let songId = e.currentTarget.getAttribute('data-song-id')
         let data = {}
         this.model.data.songs.map((song)=>{
-          if(song.id === songId){ data = song
-            dpcp(data)
-            console.log(data)
-          }
+          if(song.id === songId){ data = dpcp(song) }
         })
-        window.eventHub.emit('select',)
+        window.eventHub.emit('select',data)
       })
     },
     bindEventHub() {

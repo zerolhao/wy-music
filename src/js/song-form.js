@@ -71,12 +71,16 @@
         this.model.data = data
         this.view.render(this.model.data)
       })
+      window.eventHub.on('select',(data)=>{
+        this.model.data = data
+        this.view.render(this.model.data)
+      })
     },
     bindEvents(){
       this.view.$el.on('submit','form', (e)=>{
         e.preventDefault()
         let needs = 'name singer url'.split(' ')
-        let  data = {}
+        let  data = {} 
         needs.map((string)=>{
           data[string] = this.view.$el.find(`[name=${string}]`).val()
         })
