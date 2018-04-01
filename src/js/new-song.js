@@ -24,7 +24,6 @@
     },
     bindEvents(){
       $(this.view.el).on('click',()=>{
-        this.view.active()
         window.eventHub.emit('new')
       })
     },
@@ -34,6 +33,9 @@
       })*/
       window.eventHub.on('select',()=>{
         this.view.deactive()
+      })
+      window.eventHub.on('new',()=>{
+        this.view.active()
       })
     }
   }

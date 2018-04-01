@@ -125,6 +125,7 @@
         this.view.reset()
         let songData = dpcp(this.model.data)
         window.eventHub.emit('create', songData)
+        window.eventHub.emit('new')
       })
     },
     updateSong() {
@@ -137,6 +138,7 @@
         this.view.reset()
         let songData = dpcp(this.model.data)
         window.eventHub.emit('update',songData)
+        window.eventHub.emit('new')
       })
     }
   }
