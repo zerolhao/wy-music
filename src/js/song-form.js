@@ -107,7 +107,10 @@
         this.view.render(this.model.data)
       })
       window.eventHub.on('new', (data) => {
-        if (this.model.data.id) {
+        if (data.upload) {
+          console.log('上传')
+          Object.assign(this.model.data, data)
+        }else if(this.model.data.id){
           console.log('有id')
           this.model.data = { name: '', url: '', singer: '', id: '' }
         } else {

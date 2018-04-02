@@ -48,7 +48,8 @@
             var url = 'http://' + domain + '/' + encodeURIComponent(response.key);
             window.eventHub.emit('new',{
               url: url,
-              name: response.key
+              name: response.key,
+              upload: true
             })
           },
           'Error': function(up, err, errTip) {
