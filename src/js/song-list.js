@@ -10,9 +10,11 @@
       this.$el.html(this.template)
     },
     render(data) {
-      let { songs } = data
+      let { songs, selectSongId } = data
       let liList = songs.map((song) => { 
-        return $('<li></li>').text(song.name).attr('data-song-id',song.id) 
+        let $li = $('<li></li>').text(song.name).attr('data-song-id',song.id) 
+        if(selectSongId === song.id){$li.addClass('active') }
+        return $li
       })
       this.$el.find('ul').empty()
       liList.map((li) => {
@@ -59,6 +61,7 @@
       this.view.$el.on('click','li',(e)=>{
         this.view.activeItem(e.currentTarget)
         let songId = e.currentTarget.getAttribute('data-song-id')
+        this.model.data.selectSongId = songId
         let data = {}
         this.model.data.songs.map((song)=>{
           if(song.id === songId){ data = dpcp(song) }
@@ -73,6 +76,7 @@
       window.eventHub.on('create', (songData) => {
         this.model.data.songs.push(songData)
         this.view.render(this.model.data)
+        window.eventHub.emit('new')
       })
       window.eventHub.on('new',()=>{
         this.view.clearActive()

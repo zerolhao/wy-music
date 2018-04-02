@@ -108,8 +108,10 @@
       })
       window.eventHub.on('new', (data) => {
         if (this.model.data.id) {
+          console.log('有id')
           this.model.data = { name: '', url: '', singer: '', id: '' }
         } else {
+          console.log('没id')
           Object.assign(this.model.data, data)
         }
         this.view.render(this.model.data)
@@ -125,7 +127,6 @@
         this.view.reset()
         let songData = dpcp(this.model.data)
         window.eventHub.emit('create', songData)
-        window.eventHub.emit('new')
       })
     },
     updateSong() {
@@ -135,10 +136,8 @@
         data[string] = this.view.$el.find(`[name=${string}]`).val()
       })
       this.model.updata(data).then(() => {
-        this.view.reset()
         let songData = dpcp(this.model.data)
         window.eventHub.emit('update',songData)
-        window.eventHub.emit('new')
       })
     }
   }
