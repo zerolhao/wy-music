@@ -6,7 +6,11 @@
       return $(this.el).find(selector)[0] // 注意我们返回的是 dom 元素
     }
   }
-  let model = {}
+  let model = {
+    data: {
+      upload: 'open'
+    }
+  }
   let controller = {
     init(view, model) {
       this.view = view
@@ -34,15 +38,20 @@
               // 文件添加进队列后,处理相关的事情
             });
           },
-          'BeforeUpload': function(up, file) {
+          'BeforeUpload': (up, file)=>{
             // 每个文件上传前,处理相关的事情
             window.eventHub.emit('beforeUpload')
+            if(this.model.data.upload === 'open'){
+              this.model.data.upload = 'close'
+            }else{
+              return false
+            }
           },
           'UploadProgress': function(up, file) {
             // 每个文件上传时,处理相关的事情
           },
           // 文件上传成功后调用 FileUploaded
-          'FileUploaded': function(up, file, info) {
+          'FileUploaded': (up, file, info)=>{
             // 每个文件上传成功后,处理相关的事情
             var domain = up.getOption('domain');
             var response = JSON.parse(info.response);
@@ -53,6 +62,7 @@
               upload: true
             })
             window.eventHub.emit('afterUpload')
+            this.model.data.upload = 'open'
           },
           'Error': function(up, err, errTip) {
             //上传出错时,处理相关的事情
