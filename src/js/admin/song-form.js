@@ -108,10 +108,8 @@
       })
       window.eventHub.on('new', (data) => {
         if(this.model.data.id){
-          console.log('有id')
           this.model.data = { name: '', url: '', singer: '', id: '' }
         } else {
-          console.log('没id')
           Object.assign(this.model.data, data)
         }
         this.view.render(this.model.data)
