@@ -5,7 +5,9 @@
       this.$el = $(this.el)
     },
     render(data){
-      this.$el.find('audio').attr('src',data.song.url)
+      let {song} = data
+      this.$el.find('audio').attr('src',song.url)
+      this.$el.find('.cover').attr('src',song.cover)
     },
     play(){
       let audio = this.$el.find('audio')[0]
@@ -18,7 +20,7 @@
   }
   let model = {
     data: { 
-      song: {id: '', name: '', singer: '', url: ''}
+      song: {id: '', name: '', singer: '', url: '', cover:''}
      },
     getSong(id) {
       var query = new AV.Query('Song');
@@ -36,6 +38,7 @@
       let id = this.getSongId()
       this.model.getSong(id).then(()=>{
         this.view.render(this.model.data)
+        console.log(this.model.data.song)
         //this.view.play()
       })
       this.bindEvents()

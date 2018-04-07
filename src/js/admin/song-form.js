@@ -18,13 +18,17 @@
           <label>外链</label>
           <input type="text" name='url' value='__url__'>
         </div>
+        <div class="row">
+          <label>封面</label>
+          <input type="text" name='cover' value='__cover__'>
+        </div>
         <div class="row actions">
           <button type="submit">保存</button>
         </div>
       </form>
       `,
     render(data = {}) {
-      let placeholders = 'name singer url'.split(' ')
+      let placeholders = 'name singer url cover'.split(' ')
       let html = this.template
       placeholders.map((string) => {
         html = html.replace(`__${string}__`, data[string] || '')
@@ -45,7 +49,8 @@
       name: '',
       singer: '',
       url: '',
-      id: ''
+      id: '',
+      cover:''
     },
     create(data) {
       var Song = AV.Object.extend('Song');
@@ -53,6 +58,7 @@
       song.set('name', data.name);
       song.set('url', data.url);
       song.set('singer', data.singer);
+      song.set('cover', data.cover);
       // 设置优先级
       //song.set('priority',1);
       return song.save().then((newSong) => {
@@ -69,6 +75,7 @@
       song.set('name', data.name);
       song.set('url', data.url);
       song.set('singer', data.singer);
+      song.set('cover', data.cover);
       return song.save().then((oldSong) => {
         let { id, attributes } = oldSong
         Object.assign(this.data, { id, ...attributes })
@@ -108,7 +115,7 @@
       })
       window.eventHub.on('new', (data) => {
         if(this.model.data.id){
-          this.model.data = { name: '', url: '', singer: '', id: '' }
+          this.model.data = { name: '', url: '', singer: '', id: '',cover:'' }
         } else {
           Object.assign(this.model.data, data)
         }
@@ -116,7 +123,7 @@
       })
     },
     createSong() {
-      let needs = 'name singer url'.split(' ')
+      let needs = 'name singer url cover'.split(' ')
       let data = {}
       needs.map((string) => {
         data[string] = this.view.$el.find(`[name=${string}]`).val()
@@ -128,7 +135,7 @@
       })
     },
     updateSong() {
-      let needs = 'name singer url'.split(' ')
+      let needs = 'name singer url cover'.split(' ')
       let data = {}
       needs.map((string) => {
         data[string] = this.view.$el.find(`[name=${string}]`).val()
