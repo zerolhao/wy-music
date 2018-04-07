@@ -91,6 +91,14 @@
       </li>
     </ol>
   </div> 
+  <script>
+    // 手机页面调试，定位错误代码
+    window.onerror = function(error, file, row){
+      alert(error)
+      alert(file)
+      alert(row)
+    }
+  </script>
   <script src="//at.alicdn.com/t/font_395875_4hwrep7mypx8ncdi.js"></script>
   <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
   <script src="../node_modules/jquery/dist/jquery.min.js"></script>
