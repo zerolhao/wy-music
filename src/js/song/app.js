@@ -10,7 +10,7 @@
       this.$el.find('img.cover').attr('src',song.cover)
       this.$el.find('audio').attr('src',song.url)
       if(status === 'playing'){this.play()
-      }else{this.pause }
+      }else{this.pause() }
       this.$el.find('.song-description>h1').text(song.name)
       let {lyrics} = song
       lyrics.split('\n').map((string)=>{
