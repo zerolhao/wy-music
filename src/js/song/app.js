@@ -6,8 +6,9 @@
     },
     render(data){
       let {song,status} = data
-      this.$el.find('audio').attr('src',song.url)
+      this.$el.css('background-image', `url(${song.cover})`)
       this.$el.find('img.cover').attr('src',song.cover)
+      this.$el.find('audio').attr('src',song.url)
       if(status === 'playing'){this.play()
       }else{this.pause }
       this.$el.find('.song-description>h1').text(song.name)
@@ -59,7 +60,6 @@
       let pHeight = p.getBoundingClientRect().top
       let linesHeight = this.$el.find('.lyric>.lines')[0].getBoundingClientRect().top
       let height = pHeight - linesHeight
-      console.log(height)
       this.$el.find('.lyric>.lines').css({
         transform: `translateY(${- (height - 24)}px)`
       })

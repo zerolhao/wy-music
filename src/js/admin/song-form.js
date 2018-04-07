@@ -145,9 +145,7 @@
       let needs = 'name singer url cover lyrics'.split(' ')
       let data = {}
       needs.map((string) => {
-        console.log(string)
         data[string] = this.view.$el.find(`[name=${string}]`).val()
-        console.log(data[string])
       })
       this.model.updata(data).then(() => {
         let songData = dpcp(this.model.data)
