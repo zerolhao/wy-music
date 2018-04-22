@@ -6,5 +6,6 @@
 ## 启动应用
 1. npm i -g http-server
 2. http-server -c-1
-3. node server 8888
-4. open http://127.0.0.1:8888/src/admin.html
+3. cd src
+4. node server 8888
+5. open http://127.0.0.1:8888/src/admin.html
